@@ -1,0 +1,11 @@
+subjectID,filename,new_folder,new_filename,date,time,resx,resy,units
+SUB01,O96FG284,C:\Users\Kenzie\Documents\MATLAB_2023b\AI_Ultrasound\github\demo_dcms_to_tif\img_files\SUB01,SUB01_img1,,,0.0115262688663478,0.0115262688663478,cm
+SUB01,O96FG286,C:\Users\Kenzie\Documents\MATLAB_2023b\AI_Ultrasound\github\demo_dcms_to_tif\img_files\SUB01,SUB01_img2,,,0.0116829460363304,0.0116829460363304,cm
+SUB02,OA2E1ROS,C:\Users\Kenzie\Documents\MATLAB_2023b\AI_Ultrasound\github\demo_dcms_to_tif\img_files\SUB02,SUB02_img1,,,0.0152873993453126,0.0152873993453126,cm
+SUB02,OA2E1ROU,C:\Users\Kenzie\Documents\MATLAB_2023b\AI_Ultrasound\github\demo_dcms_to_tif\img_files\SUB02,SUB02_img2,,,0.0155719129055295,0.0155719129055295,cm
+SUB02,OA2E1RP0,C:\Users\Kenzie\Documents\MATLAB_2023b\AI_Ultrasound\github\demo_dcms_to_tif\img_files\SUB02,SUB02_img3,,,0.0149681890094595,0.0149681890094595,cm
+SUB02,OA2E1RP2,C:\Users\Kenzie\Documents\MATLAB_2023b\AI_Ultrasound\github\demo_dcms_to_tif\img_files\SUB02,SUB02_img4,,,0.0161964548669812,0.0161964548669812,cm
+SUB03,OATF0Q82,C:\Users\Kenzie\Documents\MATLAB_2023b\AI_Ultrasound\github\demo_dcms_to_tif\img_files\SUB03,SUB03_img1,,,0.0182480249463854,0.0182480249463854,cm
+SUB03,OATF0Q84,C:\Users\Kenzie\Documents\MATLAB_2023b\AI_Ultrasound\github\demo_dcms_to_tif\img_files\SUB03,SUB03_img2,,,0.0167087178672743,0.0167087178672743,cm
+SUB03,OATF0Q86,C:\Users\Kenzie\Documents\MATLAB_2023b\AI_Ultrasound\github\demo_dcms_to_tif\img_files\SUB03,SUB03_img3,,,0.0144269193095347,0.0144269193095347,cm
+SUB03,OATF0Q88,C:\Users\Kenzie\Documents\MATLAB_2023b\AI_Ultrasound\github\demo_dcms_to_tif\img_files\SUB03,SUB03_img4,,,0.0146142818979702,0.0146142818979702,cm
