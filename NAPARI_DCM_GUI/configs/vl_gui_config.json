@@ -1,0 +1,9 @@
+{
+    "output_path": "vl_output",
+    "output_mask_path": "vl_output/output_masks",
+    "output_poly_path": "vl_output/output_polygons",
+    "index_json_path": "vl_output/index.json",
+    "calc_csv_path": "vl_output/pred.csv",
+    "model_directory": "vl_models",
+    "threshold": 0.5
+}

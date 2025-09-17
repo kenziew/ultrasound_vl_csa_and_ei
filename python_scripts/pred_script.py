@@ -27,9 +27,9 @@ def setup_parser():
                         help="Filepath to output folder containing all analysis (Default: ./out)")
     parser.add_argument('--threshold', type=float, default=0.5,
                         help='Confidence Threshold for Predictions')
-    
+
     return parser
-    
+
 # Retrieve models from list of paths
 def get_models(args):
     models = []
@@ -58,7 +58,7 @@ def iou(y_true, y_pred, thr=0.5, dim=(1,2), epsilon=1e-6):
     y_pred = (y_pred > thr).to(torch.float32)
     intersection = (y_true * y_pred).sum(dim=dim)
     union = y_true.sum(dim=dim) + y_pred.sum(dim=dim) - intersection
-    iou = (intersection + epsilon) / (union + epsilon).mean()
+    iou = ((intersection + epsilon) / (union + epsilon)).mean()
     return iou
 
 # Convert ground truth mask into tensor
@@ -92,19 +92,19 @@ def predict(args, input_img, models):
         pred = np.array(pred[0].cpu().detach().numpy())
         pred = np.transpose(pred, (1, 2, 0))
         pred = cv2.resize(pred, (input_img.shape[1], input_img.shape[0]))
-        subq_pred, vl_pred = pred[..., 0], pred[..., 1]
-        ensemble_subq_pred += subq_pred
+        vl_pred, subq_pred = pred[..., 0], pred[..., 1]
         ensemble_vl_pred += vl_pred
+        ensemble_subq_pred += subq_pred
 
-    return ensemble_subq_pred, ensemble_vl_pred
+    return ensemble_vl_pred, ensemble_subq_pred
 
 # Calculate Dice and IOU metrics for VL and Subcutaneous Tissue
 def calculate_val_scores(args, vl_pred, subq_pred, mask):
-    subq_dice = dice_coef(mask[:, 0], vl_pred, thr=args.threshold)*100.0
-    vl_dice = dice_coef(mask[:, 1], subq_pred, thr=args.threshold)*100.0
+    vl_dice = dice_coef(mask[:, 0], vl_pred, thr=args.threshold)*100.0
+    subq_dice = dice_coef(mask[:, 1], subq_pred, thr=args.threshold)*100.0
 
-    subq_iou = iou(mask[:, 0], vl_pred, thr=args.threshold)
-    vl_iou = iou(mask[:, 1], subq_pred, thr=args.threshold)
+    vl_iou = iou(mask[:, 0], vl_pred, thr=args.threshold)
+    subq_iou = iou(mask[:, 1], subq_pred, thr=args.threshold)
 
     return [vl_dice, subq_dice], [vl_iou, subq_iou]
 
@@ -206,17 +206,17 @@ def analysis(args, models, df):
 
         if input_img is not None and mask_path is not None:
             with torch.no_grad():
-                mask = parse_mask(mask)
-                subq_pred, vl_pred = predict(args, input_img, models)
+                mask = parse_mask(args, mask)
+                vl_pred, subq_pred = predict(args, input_img, models)
 
                 dice, iou = calculate_val_scores(args, vl_pred, subq_pred, mask)
                 val_scores_dice.append(dice)
                 val_scores_iou.append(iou)
 
-                subq_pred = make_mask(args, input_img, subq_pred)
                 vl_pred = make_mask(args, input_img, vl_pred)
-                subq_gt = make_mask(args, input_img, mask[0])
-                vl_gt = make_mask(args, input_img, mask[1])
+                subq_pred = make_mask(args, input_img, subq_pred)
+                vl_gt = make_mask(args, input_img, mask[0][0])
+                subq_gt = make_mask(args, input_img, mask[0][1])
 
                 vl_pred_csa = calculate_vl_csa(vl_pred)
                 vl_gt_csa = calculate_vl_csa(vl_gt)
@@ -228,7 +228,7 @@ def analysis(args, models, df):
                 vl_gt_subq_first, vl_gt_subq_mid, vl_gt_subq_last = calculate_three_col_subq_thickness(subq_gt, vl_gt)
                 vizualization = make_vizualization(input_img, subq_pred, vl_pred)
 
-                cv2.imwrite(os.path.join(args.output_folder_path, row.ImageFilename.replace(args.study_folder_path, '')), vizualization)
+                cv2.imwrite(os.path.join(args.output_folder_path, row.ImageFilename.replace(args.base_path, '')), vizualization)
 
         else:
             raise FileNotFoundError(f"Either {img_path} OR {mask_path} was not found!")
@@ -311,12 +311,12 @@ def main():
             [0, 255, 0],
             [0, 255, 255],
         ]
-    os.makedirs(args.output_dir, exist_ok=True)
+    os.makedirs(args.output_folder_path, exist_ok=True)
     
     df = pd.read_csv(args.input_csv)
     models = get_models(args)
     
-    metrics, inference = analysis(df, models)
+    metrics, inference = analysis(args, models, df)
 
     metrics.to_csv(os.path.join(args.output_folder_path, 'val_metrics.csv'), index=False)
     inference.to_csv(os.path.join(args.output_folder_path, 'preds.csv'), index=False)
