@@ -26,5 +26,6 @@ reach out!
 
 McKenzie S. White  
 Email: kenzieswhite@gmail.com  
+
 Arimitsu Horikawa-Strakovsky  
 Email: arimitsu0803@gmail.com  
