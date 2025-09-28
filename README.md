@@ -2,10 +2,12 @@
 Automated Analysis of Vastus Lateralis Cross Sectional Area and Echo Intensity from Panoramic Ultrasound
 
 Models: https://huggingface.co/kenziew/ultrasound_vl_csa_and_ei  
+
 Manuscript:  
 McKenzie S. White, Arimitsu Horikawa-Strakovsky, Kirby P. Mayer, Brian W. Noehren, Yuan Wen,
 Open-Source AI for Vastus Lateralis and Adipose Tissue Segmentation to Assess Muscle Size and Quality,
 Ultrasound in Medicine & Biology  
+
 DOI: https://doi.org/10.1016/j.ultrasmedbio.2025.08.008
 
 Please see MATLAB_VL_CSA_documentation_v2.pdf for detailed information on usage.   
