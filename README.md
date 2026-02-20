@@ -1,7 +1,7 @@
 # ultrasound_vl_csa_and_ei
 Automated Analysis of Vastus Lateralis Cross Sectional Area and Echo Intensity from Panoramic Ultrasound
 
-Models: https://huggingface.co/kenziew/ultrasound_vl_csa_and_ei  
+Models and MATLAB GUIs: https://huggingface.co/kenziew/ultrasound_vl_csa_and_ei  
 
 Manuscript:  
 McKenzie S. White, Arimitsu Horikawa-Strakovsky, Kirby P. Mayer, Brian W. Noehren, Yuan Wen,
